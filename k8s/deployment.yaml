@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vusb-hello-world
+  namespace: vusb-test
+  labels:
+    app: vusb-hello-world
+spec:
+  replicas: 2 # Deploy 2 replicas
+  selector:
+    matchLabels:
+      app: vusb-hello-world
+  template:
+    metadata:
+      labels:
+        app: vusb-hello-world
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - "dmsnv-node-1"
+                      - "dmsnv-node-2"
+                      - "dnv-node-1"
+                      - "dnv-node-2"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: vusb-hello-world
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: hello-world
+          image: 
+          ports:
+            - containerPort: 50051
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"

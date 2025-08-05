@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vusb-hello-world-service
+  namespace: vusb-test
+  labels:
+    app: vusb-hello-world
+spec:
+  type: ClusterIP
+  sessionAffinity: None # This gives us round-robin
+  ports:
+    - port: 50051
+      targetPort: 50051
+      name: grpc
+  selector:
+    app: vusb-hello-world

@@ -1,0 +1,7 @@
+# Test namespace for hello world service
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vusb-test
+  labels:
+    purpose: hello-world-testing
