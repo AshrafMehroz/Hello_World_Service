@@ -37,7 +37,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: hello-world
-          image: 
+          image: containers-dev.apporto.com/hello_world_service/hello-world:latest
           ports:
             - containerPort: 50051
           resources:
